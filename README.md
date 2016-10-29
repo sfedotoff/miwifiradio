@@ -34,8 +34,8 @@ All you are doing may or may not hurt your device and finally brick it :trollfac
 1. Config your server to be up and running. Use nginx + PHP 5.4+ + MySQL for that
 2. Here is an example of my configuration for domain (using Vesta as my control panel). Pay attention to the lines rewriting m3u8 files and redirecting requests to nonexistant files to our main php-script. Don't forget to replace domainname.com with the one you like (and have access to). This config can be non-functional on your nginx installation, so just pay attention to what i mentioned above and modify it to fit your server.
 
-```
-server {
+    ```
+    server {
      listen      192.168.0.100:80;
      server_name domainname.com ximalaya.com www.ximalaya.com api.ximalaya.com mobile.ximalaya.com open.ximalaya.com;
      root        /home/webuser/web/ximalaya.com/public_html;
@@ -75,7 +75,7 @@ server {
              
                  include     /home/webuser/conf/web/nginx.ximalaya.com.conf*;
              }
-```
+    ```
 3. Copy the files from this repository to your site's root folder.
 4. Configure database credentials inside **config/config.php**
 5. Import initial database via phpmyadmin (file **db.sql**)
