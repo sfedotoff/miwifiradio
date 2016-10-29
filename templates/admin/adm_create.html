@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Создание учетной записи администратора</title>
+			<link rel="stylesheet" type="text/css" href="css/jquery/jquery.ui.all.css" media="screen"/>
+			<link rel="stylesheet" type="text/css" href="css/table_data.css" media="screen"/>
+			<link rel="stylesheet" type="text/css" href="css/admin.css" media="screen"/>
+			<script type="text/javascript" src="js/jquery.min.js"></script>
+			<script type="text/javascript" src="js/jquery-ui-1.8.2.js"></script>
+			<script type="text/javascript" src="js/jquery.validate.js" ></script>
+			<script type="text/javascript" src="js/jquery.dataTables.js"></script>
+			<script type="text/javascript" src="js/jquery.droppy.js"></script>
+			<script type="text/javascript" src="js/custom.js"></script>
+	</head>
+<body>
+
+<div id="wrapper">
+	<div id="content-install">
+	<div class="logo"></div>
+	<div class="simplebox" style="padding:15px;margin:auto;">
+		$messages
+		<form action="admin.php" method="post">
+			<table cellspacing="10" cellpadding="0" border="0" style="border-spacing:15px;width:100%;">
+				<tr>
+					<td><label class="req">Логин: </label></td>
+					<td><input type="text" name="login" value="" class="installform"/></td>
+				</tr>
+				<tr>
+					<td><label class="req">Пароль: </label></td>
+					<td><input type="password" name="password" value="" class="installform"/></td>
+				</tr>
+				<tr>
+					<td><label class="req">Повторите пароль: </label></td>
+					<td><input type="password" name="password2" value="" class="installform"/></td>
+				</tr>
+				<tr>
+					<td><label class="req">E-mail: </label></td>
+					<td><input type="text" name="adm_mail" value="" class="installform"/></td>
+				</tr>
+				<tr>
+					<td><label class="req">Отображаемое имя: </label></td>
+					<td><input type="text" name="name" value="" class="installform"/></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="aligncenter"><input type="submit" value="Создать администратора" class="button white"/></p></td>
+				</tr>
+			</table>
+		</form>
+		<div class="clear"></div>
+	</div>
+	</div>
+</div>
+</body>
+</html>

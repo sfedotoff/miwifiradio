@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Интерфейс администратора - Вход</title>
+			<link rel="stylesheet" type="text/css" href="css/jquery/jquery.ui.all.css" media="screen"/>
+			<link rel="stylesheet" type="text/css" href="css/table_data.css" media="screen"/>
+			<link rel="stylesheet" type="text/css" href="css/admin.css" media="screen"/>
+			<script type="text/javascript" src="js/jquery.min.js"></script>
+			<script type="text/javascript" src="js/jquery-ui-1.8.2.js"></script>
+			<script type="text/javascript" src="js/jquery.dataTables.js"></script>
+			<script type="text/javascript" src="js/jquery.droppy.js"></script>
+			<script type="text/javascript" src="js/custom.js"></script>
+	</head>
+<body>
+
+<div id="wrapper">
+	<div id="content-login">
+	<div class="simplebox" style="padding:25px;">
+		<form action="admin.php" method="post">
+			<table cellspacing="10" cellpadding="0" border="0" style="border-spacing:15px;width:100%;">
+				<tr>
+					<td rowspan="3" style="width:80px;"><img src="images/admin/template/icons/48/admin_users.png"></td>
+					<td><label class="req">Логин: </label></td>
+					<td><input type="text" name="login" value="" id="username"/></td>
+				</tr>
+				<tr>
+					<td><label class="req">Пароль: </label></td>
+					<td><input type="password" name="password" value="" id="password"/></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="checkbox" name="remember" id="remember"/> <label class="rem">Запомнить меня</label><p class="fr"><input type="submit" value="Войти" class="button white" id="login"/></p></td>
+				</tr>
+			</table>
+			$messages
+			<input type="hidden" name="redirect" value="$redirect">
+		</form>
+		<div class="clear"></div>
+	</div>
+	</div>
+</div>
+</body>
+</html>
