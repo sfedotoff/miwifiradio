@@ -8,7 +8,7 @@ It requires you to redirect subdomains on your router to work correctly and a se
 # Tools needed
 1. Mi WiFi Online Radio
 
-![Mi WiFi Online Radio](/images/xiaomi.jpg)
+    ![Mi WiFi Online Radio](/images/xiaomi.jpg)
 
 2. WiFi Router supporting DNSMasq (DD-WRT supports it)
 3. Local/Remote Server with root access for installing programs
