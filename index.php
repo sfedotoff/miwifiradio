@@ -1,7 +1,6 @@
 <?php
-// Including composer autoloader
-require __DIR__ . '/vendor/autoload.php';
-// Then registering autoloader for Requests library
+//Include lib Requests
+require_once 'lib/Requests.php';
 Requests::register_autoloader();
 // This is required for including configs and functions. Sorry, bad code :D
 define("_KATE_MAIN", true);
@@ -13,22 +12,27 @@ error_reporting(0);
 $requestParams = request_compose();
 $url = $requestParams['httpScheme'] . '://' . $requestParams['httpHost'] . $requestParams['requestPath'];
 
-if($requestParams['requestPath'] == '/openapi-gateway-app/search/radios') {
+if($requestParams['requestPath'] == '/') {
+    // Index
+    header("Location: admin.php");
+}elseif($requestParams['requestPath'] == '/openapi-gateway-app/live/radios') {
     // Radio search request
     include($global_path . 'include/api/radiosearch.php');
 } elseif($requestParams['requestPath'] == '/openapi-gateway-app/live/get_radios_by_ids') {
     // Radio list by ids
     include($global_path . 'include/api/get_radios_by_ids.php');
 } else {
-    // Requests which we don't intercept
+    // Requests which we don't intercept 
+/*
      if($requestParams['method'] == 'GET') {
-         $url .= '?' . $requestParams['paramsString'];
+         $url = 'http' . $url . '?' . $requestParams['paramsString'];
+         echo $url;
          $response = Requests::get($url);
      } else {
          $response = Requests::post($url, array(), $requestParams['params']);
      }
      echo $response->body;
-
+*/   echo "error";
      // Logging unknown/untracked requests
      //addlog($url); // URL composed by our wrapper
      //addlog($requestParams['requestPath']); // API path

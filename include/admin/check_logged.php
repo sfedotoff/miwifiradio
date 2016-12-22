@@ -3,7 +3,7 @@ if(!defined("_KATE_MAIN")) die("You have no access to this file");
 include_once("config/config.php");
 include_once($global_path."include/mysql.php");
 global $global_path;
-
+error_reporting(1);
 if($db->sql_numrows($db->sql_query("SELECT id FROM admins LIMIT 1"))==0) {
 	if(!isset($_POST['login'])) {
 		$messages = "<span class=\"message alert\">Не создано ни одной учетной записи администратора. Создайте новую запись, используя форму ниже</span>";
@@ -82,6 +82,6 @@ if(isset($_REQUEST['logout'])) {
 	setcookie("ad_login", "");
 	setcookie("ad_mail", "");
 	setcookie("ad_name", "");
-	if(!eregi("logout", $redirect)) header("Location: $redirect"); else header("Location: admin.php");
+	if(!preg_match("/logout/", $redirect)) header("Location: $redirect"); else header("Location: admin.php");
 }
 ?>

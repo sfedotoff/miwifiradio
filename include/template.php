@@ -57,7 +57,7 @@ if(!defined("_ADMIN")) {
 	function head() {
 		global $pagetitle, $breadcrumbs, $db, $subnavmenu;
 		$user_real = $_COOKIE['ad_name'];
-		if(eregi("gzip", $_SERVER['HTTP_ACCEPT_ENCODING'])) ob_start("ob_gzhandler");
+		if(preg_match("/gzip/", $_SERVER['HTTP_ACCEPT_ENCODING'])) ob_start("ob_gzhandler");
 		$menu = top_admin_menu();
 		if($_COOKIE['fullsize']=="yes") $hider = " style=\"width: 100%;\""; else $hider = "";
 		$sqlinfo = $db->sql_info();
