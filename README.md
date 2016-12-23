@@ -35,37 +35,51 @@ All you are doing may or may not hurt your device and finally brick it :trollfac
 2. Here is an example of my configuration for domain (using Vesta as my control panel). Pay attention to the lines rewriting m3u8 files and redirecting requests to nonexistant files to our main php-script. Don't forget to replace domainname.com with the one you like (and have access to). This config can be non-functional on your nginx installation, so just pay attention to what i mentioned above and modify it to fit your server.
 
     ```
-    server {
-     listen      192.168.0.100:80;
-     server_name domainname.com ximalaya.com www.ximalaya.com api.ximalaya.com mobile.ximalaya.com open.ximalaya.com;
-     root        /home/webuser/web/ximalaya.com/public_html;
-     index       index.php index.html index.htm;
-     location / {
-         rewrite ^/(.*).m3u8 /play.php?xid=$1; 
-         try_files $uri $uri/ /index.php;
- 
-         location ~* ^.+\.(jpeg|jpg|png|gif|bmp|ico|svg|css|js)$ {
-             expires     max;
-         }
- 
-         location ~ [^/]\.php(/|$) {
-             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-             if (!-f $document_root$fastcgi_script_name) {
-                 return  404;
-             }
- 
-             fastcgi_pass    127.0.0.1:9000;
-             fastcgi_index   index.php;
-                         include         /etc/nginx/fastcgi_params;
-                     }
-                 }
+server {
+ listen      192.168.1.1:80;
+ server_name api.ximalaya.com rad.loc;
+ root        /zdata/www/miradio;
+ index       index.php index.html index.htm;
+// access_log  /var/log/nginx/radio_access.log;
+// error_log   /var/log/nginx/radio_error.log;
+    location @ximalaya {
+      proxy_pass http://api.ximalaya.com;
+    }
 
-                 location ~* "/\.(htaccess|htpasswd)$" {
-                     deny    all;
-                     return  404;
-                 }
-             
-             }
+ location / {
+    rewrite ^/(.*).m3u8 /play.php?xid=$1;
+    try_files $uri $uri/ @ximalaya;
+    location /openapi-gateway-app/live/radios {
+        try_files $uri $uri/ /index.php;
+    }
+    location /openapi-gateway-app/live/get_radios_by_ids {
+        try_files $uri $uri/ /index.php;
+    }
+
+    location ~* ^.+\.(jpeg|jpg|png|gif|bmp|ico|svg|css|js)$ {
+        expires     max;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        if (!-f $document_root$fastcgi_script_name) {
+            return  404;
+        }
+
+        fastcgi_pass    127.0.0.1:9000;
+        fastcgi_index   index.php;
+             include         /usr/local/etc/nginx/fastcgi_params;
+    }
+}
+
+    location ~* "/\.(htaccess|htpasswd)$" {
+        deny    all;
+        return  404;
+    }
+
+}
+
+
     ```
 3. Copy the files from this repository to your site's root folder.
 4. Configure database credentials inside **config/config.php**
@@ -75,10 +89,11 @@ All you are doing may or may not hurt your device and finally brick it :trollfac
 8. Try to understand the way of creating your own radios in admin panel.
 9. Install ffmpeg with fdk-aac. I used the ppa from here: https://launchpad.net/~mc3man/+archive/ubuntu/trusty-media For freebsd you need recompile it from ports.
 10. Check your ffmpeg starts and is functioning
-11. Now configure DNSMasq on your router to redirect #.ximalaya.com to your server. In DD-WRT this is done in section Services -> Services. Find the textbox **Additional DNSMasq Options** and add the code below, then save configuration and reboot router. You may refer to the image below.
+11. Add script ffkill.php to cron "*/5 * * * * /usr/local/bin/php /www/miradio/ffkill.php"
+12. Now configure DNSMasq on your router to redirect #.ximalaya.com to your server. In DD-WRT this is done in section Services -> Services. Find the textbox **Additional DNSMasq Options** and add the code below, then save configuration and reboot router. You may refer to the image below.
 
     `address=/.ximalaya.com/192.168.0.100`
     ![DD-WRT DNSMasq](/images/ddwrt.png)
-12. Start using your app for the Radio device as usual. Try adding radio station in it and search for the stations you've added in admin panel before.
+13. Start using your app for the Radio device as usual. Try adding radio station in it and search for the stations you've added in admin panel before.
 
 Sorry for the code quality in wrapper script. It's as old as Ice Age. Feel free to recommend your changes and new wrapper functions.

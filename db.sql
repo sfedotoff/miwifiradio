@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS `radios` (
   `description` text NOT NULL,
   `streamurl` varchar(255) NOT NULL,
   `logo` varchar(255) NOT NULL,
+  `pid` varchar(6) DEFAULT NULL,
+  `lastrequest` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `xid` (`xid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

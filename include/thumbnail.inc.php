@@ -104,7 +104,7 @@ class Thumbnail {
      * @param string $fileName
      * @return Thumbnail
      */
-    function Thumbnail($fileName) {
+    function __construct($fileName) {
         //make sure the GD library is installed
     	if(!function_exists("gd_info")) {
         	echo 'You do not have the GD Library installed.  This class requires the GD library to function properly.' . "\n";
@@ -170,7 +170,7 @@ class Thumbnail {
 
         if($this->error == true) {
             $this->showErrorImage();
-            break;
+            exit;
         }
     }
 

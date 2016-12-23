@@ -48,8 +48,9 @@ switch ($act) {
         $description = $_POST['description'];
         $image = upload_file("userfile", "images/radiologos", "", "images/radiologos/thumb", 64, 64, true);
 
-        $db->sql_query("INSERT INTO radios (title, description, streamurl, logo)
-						VALUES ('$title', '$description', '$streamurl', '$image')");
+        $db->sql_query("INSERT INTO radios (title, description, streamurl, logo, pid, lastrequest,xid)
+						VALUES ('$title', '$description', '$streamurl', '$image',NULL,NULL,527782000)");
+
         // We need a 9 digit long id for storing it on Xiaomi server for further interaction
         // This is the way we generate it. I am using standard template and replacing its last
         // digits with my id from database
