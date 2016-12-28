@@ -1,0 +1,19 @@
+<?php
+define("_KATE_MAIN", true);
+include_once("../../config/config.php");
+include_once($global_path."include/function.php");
+// We don't want errors to block our app from displaying info
+error_reporting(0);
+if($sync==1) {
+    $result = $db->sql_query("SELECT xid, title, description, logo FROM radios");
+    $radios = [];
+    while($radioRow = $db->sql_fetchrow($result)) {
+	$radios[] = '{"xid":"'.$radioRow['xid'].'","title":"'.addslashes($radioRow['title']).'","description":"'.addslashes($radioRow['description']).'","logo":"'.$radioRow['logo'].'"}';
+    }
+    $response = '['.implode(",", $radios).']';
+    echo $response;
+} else {
+    echo "Syncronisation is disabled in config file";
+}
+exit;
+

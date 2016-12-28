@@ -41,7 +41,7 @@ if($requestParams['requestPath'] == '/') {
      //addlog($requestParams['requestPath']); // API path
      //addlog($response->body); // Response from API
 */     
-    header("HTTP/1.0 404 Not Found");
-    exit;
+//    header("HTTP/1.0 404 Not Found");
+//    exit;
      
 }

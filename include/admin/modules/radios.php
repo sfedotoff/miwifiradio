@@ -113,8 +113,9 @@ switch ($act) {
     default:
         head();
         box_start("Радиостанции");
-        echo "<a href=\"?mod=radios&act=add\" class=\"button white\"><span class=\"icon_text addnew\"></span>Добавить</a>"
-            . "<div style=\"clear: both; padding:0; height: 10px; margin: 0;\"> </div>";
+        echo "<a href=\"?mod=radios&act=add\" class=\"button white\"><span class=\"icon_text addnew\"></span>Добавить</a>";
+        if($sync==1) echo "<a onClick=\"sync('http://$master_host/syncws.php?vps_id=$ident&vps_key=$sync_pwd');\" class=\"button white\"><span class=\"icon_text sync\"></span>Синхронизация</a>";
+        echo "<div style=\"clear: both; padding:0; height: 10px; margin: 0;\"> </div>";
         if (isset($_REQUEST['mes'])) {
             if ($_REQUEST['mes'] == "added") echo "<span class=\"message success\">Радиостанция успешно добавлена</span>";
             if ($_REQUEST['mes'] == "saved") echo "<span class=\"message success\">Радиостанция успешно изменена</span>";

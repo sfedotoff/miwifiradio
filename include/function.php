@@ -279,10 +279,7 @@ function upload_file($fieldname, $dirtoplace, $filename = "", $thumbdir = "", $t
             move_uploaded_file($file['tmp_name'], $dirtoplace . "/" . $newname);
             chmod($dirtoplace . "/" . $newname, 0666);
             if (strlen($thumbdir) > 0 OR $thumbwidth > 0 OR $thumbheight > 0) {
-                echo $dirtoplace . "/" . $newname;
-
                 include_once('include/thumbnail.inc.php');
-
                 $thumb = new Thumbnail($dirtoplace . "/" . $newname);
                 $reswidth = ($thumbwidth > 0) ? $thumbwidth : 250;
                 $resheight = ($thumbheight > 0) ? $thumbheight : 250;
