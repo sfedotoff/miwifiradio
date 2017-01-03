@@ -11,6 +11,8 @@ if($sync==1) {
 	$radios[] = '{"xid":"'.$radioRow['xid'].'","title":"'.addslashes($radioRow['title']).'","description":"'.addslashes($radioRow['description']).'","logo":"'.$radioRow['logo'].'"}';
     }
     $response = '['.implode(",", $radios).']';
+    $response = str_replace("\n", "", $response);
+    $response = str_replace("\r", "", $response);
     echo $response;
 } else {
     echo "Syncronisation is disabled in config file";
