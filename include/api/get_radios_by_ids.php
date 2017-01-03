@@ -48,5 +48,7 @@ $requestParams['params']['ids'] = implode(',', $realXimalayaIds);
 
 
 // TODO: perform request to API if needed. Then override the response
-
-echo '{"radios":['.implode(',', $myRadios).']}';
+$response = '{"radios":['.implode(',', $myRadios).']}';
+$response = str_replace("\n", "", $response);
+$response = str_replace("\r", "", $response);
+echo $response;
