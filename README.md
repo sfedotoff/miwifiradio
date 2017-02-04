@@ -36,12 +36,12 @@ All you are doing may or may not hurt your device and finally brick it :trollfac
 
     ```
 server {
- listen      192.168.1.1:80;
- server_name api.ximalaya.com rad.loc;
- root        /zdata/www/miradio;
- index       index.php index.html index.htm;
-// access_log  /var/log/nginx/radio_access.log;
-// error_log   /var/log/nginx/radio_error.log;
+    listen      192.168.1.1:80;
+    server_name api.ximalaya.com rad.loc;
+    root        /zdata/www/miradio;
+    index       index.php index.html index.htm;
+//  access_log  /var/log/nginx/radio_access.log;
+//  error_log   /var/log/nginx/radio_error.log;
     location @ximalaya {
       proxy_pass http://api.ximalaya.com;
     }
@@ -54,6 +54,10 @@ server {
     }
     location /openapi-gateway-app/live/get_radios_by_ids {
         try_files $uri $uri/ /index.php;
+    }
+
+    location /openapi-gateway-app/search/radios {
+    try_files $uri $uri/ /index.php;
     }
 
     location ~* ^.+\.(jpeg|jpg|png|gif|bmp|ico|svg|css|js)$ {

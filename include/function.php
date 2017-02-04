@@ -279,14 +279,9 @@ function upload_file($fieldname, $dirtoplace, $filename = "", $thumbdir = "", $t
             move_uploaded_file($file['tmp_name'], $dirtoplace . "/" . $newname);
             chmod($dirtoplace . "/" . $newname, 0666);
             if (strlen($thumbdir) > 0 OR $thumbwidth > 0 OR $thumbheight > 0) {
-                include_once('include/thumbnail.inc.php');
-                $thumb = new Thumbnail($dirtoplace . "/" . $newname);
-                $reswidth = ($thumbwidth > 0) ? $thumbwidth : 250;
-                $resheight = ($thumbheight > 0) ? $thumbheight : 250;
-                $thumb->crop(0, 0, $reswidth, $resheight);
-                $thumb->resize($reswidth, $resheight);
-                $dir = (strlen($thumbdir) > 0) ? $thumbdir : $dirtoplace . "/thumbs";
-                $thumb->save($dir . "/thumb_" . $newname);
+                $on=$dirtoplace . "/" . $newname;
+                $nn=$dirtoplace . "/thumb/thumb_" . $newname;
+                make_thumb($on,$nn,250,250);
             }
             return $newname;
         } else return "";
@@ -354,4 +349,23 @@ function request_compose()
         'paramsString' => $paramsString
     ];
     return $request;
+}
+
+function make_thumb($src, $dest, $desired_width,$desired_h) {
+
+  /* read the source image */
+  $source_image = imagecreatefromjpeg($src);
+  $width = imagesx($source_image);
+  $height = imagesy($source_image);
+
+  $desired_height = $desired_h;
+
+  /* create a new, "virtual" image */
+  $virtual_image = imagecreatetruecolor($desired_width, $desired_height);
+
+  /* copy source image at a resized size */
+  imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
+
+  /* create the physical thumbnail image to its destination */
+  imagejpeg($virtual_image, $dest);
 }

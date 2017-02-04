@@ -1,0 +1,16 @@
+UPDATE:
+To update from previos version
+1. Backup you database
+2. Patch it with patch.sql
+3. Copy files with overwrite (dont forget to change config.php)
+4. See small update nginx conf for search requests.
+
+CHANGELOG:
+New features:
+1. New field in admin panel: genre, country, header*, noencode*.
+2. Random header to ffmpeg from array.
+3. FFMpeg control interface in admin panel.
+Fixes:
+1. Fix thumbnails
+2. Some code rewriten
+And more. 

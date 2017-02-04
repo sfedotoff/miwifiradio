@@ -13,15 +13,17 @@ error_reporting(1);
 
 $requestParams = request_compose();
 $url = $requestParams['httpScheme'] . '://' . $requestParams['httpHost'] . $requestParams['requestPath'];
-
-
 if($requestParams['requestPath'] == '/') {
     // Index
     header("Location: admin.php");
 }elseif($requestParams['requestPath'] == '/openapi-gateway-app/live/radios') {
     // Radio search request
     include($global_path . 'include/api/radiosearch.php');
-} elseif($requestParams['requestPath'] == '/openapi-gateway-app/live/get_radios_by_ids') {
+} elseif($requestParams['requestPath'] == '/openapi-gateway-app/search/radios') {
+    // Radio search request
+    include($global_path . 'include/api/radiosearch.php');
+}
+ elseif($requestParams['requestPath'] == '/openapi-gateway-app/live/get_radios_by_ids') {
     // Radio list by ids
     include($global_path . 'include/api/get_radios_by_ids.php');
 } else {
