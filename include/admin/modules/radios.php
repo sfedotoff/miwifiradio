@@ -172,7 +172,7 @@ switch ($act) {
             $db->sql_query("UPDATE radios SET logo='' WHERE id='$id'");
         if (strlen($image) > 0) $db->sql_query("UPDATE radios SET logo='$image' WHERE id='$id'");
         if($noencode == 'on') $noencode=1; else $noencode=0;
-        $db->sql_query("UPDATE radios SET title='$title', description='$description', streamurl='$streamurl', logo='$image', genre=$genre,country=$country,header='$header',noencode=$noencode
+        $db->sql_query("UPDATE radios SET title='$title', description='$description', streamurl='$streamurl', genre=$genre,country=$country,header='$header',noencode=$noencode
 						WHERE id='$id'");
         header("Location: admin.php?mod=radios&mes=saved");
         break;

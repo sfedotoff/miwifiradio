@@ -352,9 +352,17 @@ function request_compose()
 }
 
 function make_thumb($src, $dest, $desired_width,$desired_h) {
-
-  /* read the source image */
-  $source_image = imagecreatefromjpeg($src);
+  $info = new SplFileInfo($src);
+  $ext = $info->getExtension();
+  if(strcasecmp($ext, "jpg")==0 or strcasecmp($ext, "jpeg")==0 ) {
+      $source_image = imagecreatefromjpeg($src);
+  } else if(strcasecmp($ext, "png")==0) {
+      $source_image = imagecreatefrompng($src);
+  } else if(strcasecmp($ext, "gif")==0) {
+      $source_image = imagecreatefromgif($src);
+  } else {
+    echo "Error extension: $ext!";
+  }
   $width = imagesx($source_image);
   $height = imagesy($source_image);
 
@@ -367,5 +375,11 @@ function make_thumb($src, $dest, $desired_width,$desired_h) {
   imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
 
   /* create the physical thumbnail image to its destination */
-  imagejpeg($virtual_image, $dest);
+  if(strcasecmp($ext, "jpg")==0 or strcasecmp($ext, "jpeg")==0 ) {
+      imagejpeg($virtual_image, $dest);
+  } else if(strcasecmp($ext, "png")==0) {
+      imagepng($virtual_image, $dest);
+  } else if(strcasecmp($ext, "gif")==0) {
+      imagegif($virtual_image, $dest);
+  }
 }
