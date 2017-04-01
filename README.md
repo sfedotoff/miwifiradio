@@ -83,8 +83,8 @@ server {
 
 }
 
+```
 
-    ```
 3. Copy the files from this repository to your site's root folder.
 4. Configure database credentials inside **config/config.php**
 5. Import initial database via phpmyadmin (file **db.sql**)
