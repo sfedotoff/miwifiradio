@@ -34,7 +34,7 @@ All you are doing may or may not hurt your device and finally brick it :trollfac
 1. Config your linux/bsd server to be up and running. Use nginx + PHP 5.4+ + MySQL for that
 2. Here is an example of my configuration for domain (using Vesta as my control panel). Pay attention to the lines rewriting m3u8 files and redirecting requests to nonexistant files to our main php-script. Don't forget to replace domainname.com with the one you like (and have access to). This config can be non-functional on your nginx installation, so just pay attention to what i mentioned above and modify it to fit your server.
 
-    ```
+```
 server {
     listen      192.168.1.1:80;
     server_name api.ximalaya.com rad.loc;
