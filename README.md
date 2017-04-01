@@ -13,9 +13,10 @@ It requires you to redirect subdomains on your router to work correctly and a se
 2. WiFi Router supporting DNSMasq (DD-WRT supports it)
 3. Local/Remote Server with root access for installing programs
     - PHP 5.4+ (allowing you to use **exec** function) (PHP 7 with mysqli supported)
+    Dont forget to install php modules, such ad php-gd, php-mbstring, php-mysqli !
     - MySQL
     - Nginx (you can remake everything for Apache as well)
-    - ffmpeg + fdk_acc
+    - ffmpeg + fdk_acc (it may work also with acc codec)
 4. Unix knowledge
 
 ## Remember
@@ -23,8 +24,6 @@ Things will only work when you use your phone in the same WiFi network with the 
 favorites.
 
 This wrapper works as an interceptor for all your requests to *.ximalaya.com to emulate API. So some things may go broken.
-
-**This wrapper is only inteded for private use and is not allowed to use publicly**.
 
 All you are doing may or may not hurt your device and finally brick it :trollface:
 
@@ -37,7 +36,7 @@ All you are doing may or may not hurt your device and finally brick it :trollfac
 ```
 server {
     listen      192.168.1.1:80;
-    server_name api.ximalaya.com rad.loc;
+    server_name vpsXX.ximiraga.ru api.ximalaya.com;
     root        /zdata/www/miradio;
     index       index.php index.html index.htm;
 //  access_log  /var/log/nginx/radio_access.log;
