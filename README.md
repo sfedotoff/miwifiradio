@@ -32,52 +32,109 @@ All you are doing may or may not hurt your device and finally brick it :trollfac
 
 1. Config your linux/bsd server to be up and running. Use nginx + PHP 5.4+ + MySQL for that
 2. Here is an example of my configuration for domain (using Vesta as my control panel). Pay attention to the lines rewriting m3u8 files and redirecting requests to nonexistant files to our main php-script. Don't forget to replace domainname.com with the one you like (and have access to). This config can be non-functional on your nginx installation, so just pay attention to what i mentioned above and modify it to fit your server.
+Note, than iOS MiHomeApp need HTTPS!
 
 ```
 server {
-    listen      192.168.1.1:80;
-    server_name vpsXX.ximiraga.ru api.ximalaya.com;
+    listen      *:443;
+    ssl on;
+    ssl_certificate /usr/local/etc/nginx/ssl/ssl.crt;
+    ssl_certificate_key /usr/local/etc/nginx/ssl/ximiraga.key;
+    server_name ximalaya.com www.ximalaya.com api.ximalaya.com mobile.ximalaya.com open.ximalaya.com ximiraga.ru www.ximiraga.ru;
     root        /zdata/www/miradio;
     index       index.php index.html index.htm;
-//  access_log  /var/log/nginx/radio_access.log;
-//  error_log   /var/log/nginx/radio_error.log;
+    access_log  /var/log/nginx/radio_access.ssl.log;
+    error_log   /var/log/nginx/radio_error.ssl.log;
     location @ximalaya {
       proxy_pass http://api.ximalaya.com;
     }
 
- location / {
-    rewrite ^/(.*).m3u8 /play.php?xid=$1;
+    location / {
+    rewrite ^/(.*).m3u8 /play.php?xid=$1; 
     try_files $uri $uri/ @ximalaya;
+    
     location /openapi-gateway-app/live/radios {
-        try_files $uri $uri/ /index.php;
+    try_files $uri $uri/ /index.php;
     }
-    location /openapi-gateway-app/live/get_radios_by_ids {
-        try_files $uri $uri/ /index.php;
-    }
-
+    
     location /openapi-gateway-app/search/radios {
     try_files $uri $uri/ /index.php;
     }
 
+    location /openapi-gateway-app/live/get_radios_by_ids {
+    try_files $uri $uri/ /index.php;
+    }
+
     location ~* ^.+\.(jpeg|jpg|png|gif|bmp|ico|svg|css|js)$ {
-        expires     max;
+    expires     max;
     }
 
     location ~ [^/]\.php(/|$) {
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        if (!-f $document_root$fastcgi_script_name) {
-            return  404;
-        }
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    if (!-f $document_root$fastcgi_script_name) {
+        return  404;
+    }
 
         fastcgi_pass    127.0.0.1:9000;
         fastcgi_index   index.php;
              include         /usr/local/etc/nginx/fastcgi_params;
     }
-}
+    }
 
     location ~* "/\.(htaccess|htpasswd)$" {
-        deny    all;
+    deny    all;
+    return  404;
+    }
+
+}
+
+
+server {
+    listen      *:80;
+    server_name api.io.mi.com ximalaya.com www.ximalaya.com api.ximalaya.com mobile.ximalaya.com open.ximalaya.com ximiraga.ru www.ximiraga.ru;
+    root        /zdata/www/miradio;
+    index       index.php index.html index.htm;
+    access_log  /var/log/nginx/radio_access.log;
+    error_log   /var/log/nginx/radio_error.log;
+    location @ximalaya {
+      proxy_pass http://api.ximalaya.com;
+    }
+
+    location / {
+    rewrite ^/(.*).m3u8 /play.php?xid=$1; 
+    try_files $uri $uri/ @ximalaya;
+    
+    location /openapi-gateway-app/live/radios {
+    try_files $uri $uri/ /index.php;
+    }
+    
+    location /openapi-gateway-app/search/radios {
+    try_files $uri $uri/ /index.php;
+    }
+
+    location /openapi-gateway-app/live/get_radios_by_ids {
+    try_files $uri $uri/ /index.php;
+    }
+
+    location ~* ^.+\.(jpeg|jpg|png|gif|bmp|ico|svg|css|js)$ {
+    expires     max;
+    }
+
+    location ~ [^/]\.php(/|$) {
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    if (!-f $document_root$fastcgi_script_name) {
         return  404;
+    }
+
+        fastcgi_pass    127.0.0.1:9000;
+        fastcgi_index   index.php;
+             include         /usr/local/etc/nginx/fastcgi_params;
+    }
+    }
+
+    location ~* "/\.(htaccess|htpasswd)$" {
+    deny    all;
+    return  404;
     }
 
 }
