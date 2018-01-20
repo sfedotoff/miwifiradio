@@ -1,16 +1,17 @@
 FROM richarvey/nginx-php-fpm
-ARG WWW_PATH
-ARG DOMAIN_NAME
-ENV WWW_PATH=$WWW_PATH
+ARG MIR_WWW_PATH
+ARG MIR_DOMAIN_NAME
+ARG MIR_SSL_ENABLED
+ENV MIR_WWW_PATH=$MIR_WWW_PATH
 RUN apk update
 RUN apk add ffmpeg
-RUN mkdir -p $WWW_PATH
-WORKDIR $WWW_PATH
+RUN mkdir -p $MIR_WWW_PATH
+WORKDIR $MIR_WWW_PATH
 ADD ./ ./
 RUN mkdir -p uploads/playing
 RUN chmod a+w uploads
 RUN chmod a+w uploads/playing
-#RUN envsubst '$MYSQL_HOST$MYSQL_ROOT_USER$MYSQL_ROOT_PASSWORD$MYSQL_DATABASE$DOMAIN_NAME' < docker/config/config.php > config/config.php
 RUN chmod a+w config/config.php
-RUN envsubst '$DOMAIN_NAME$WWW_PATH' < docker/nginx.config > /etc/nginx/sites-enabled/default.conf
+RUN envsubst '$MIR_DOMAIN_NAME$MIR_WWW_PATH' < docker/nginx.config > /etc/nginx/sites-enabled/default.conf
+RUN if [ "$MIR_SSL_ENABLED" = "1" ] ; then envsubst '$MIR_DOMAIN_NAME$MIR_WWW_PATH' < docker/nginx.ssl.config > /etc/nginx/sites-enabled/default.ssl.conf ; fi;
 RUN sed -i 's/libfdk_aac/aac/g' include/ffcontrol.php

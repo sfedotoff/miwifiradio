@@ -5,42 +5,38 @@ services:
             dockerfile: ./docker/Dockerfile
             context: ./../
             args:
-                - WWW_PATH=${WWW_PATH}
-                - DOMAIN_NAME=${DOMAIN_NAME}
+                - MIR_WWW_PATH=${MIR_WWW_PATH}
+                - MIR_DOMAIN_NAME=${MIR_DOMAIN_NAME}
         image: miradio-web
         container_name: miradio-web
         env_file:
             - ".env"
-        volumes:
-            - .:/options
-#        ports:
-#            - "80:880"
-#            - "443:8443"
-        # depends_on:
-        #     - mysqldb
-#    myadmin:
-#        image: phpmyadmin/phpmyadmin
-        # container_name: miradio-phpmyadmin
-#        ports:
-#            - "8080:80"
-    #     environment:
-    #         - PMA_ARBITRARY=1
-    #         - PMA_HOST=${MYSQL_HOST}
-    #     restart: always
-    #     depends_on:
-    #         - mysqldb
-    # mysqldb:
-    #     image: mysql
-    #     container_name: ${MYSQL_HOST}
-    #     restart: always
-    #     env_file:
-    #         - ".env"
-    #     environment:
-            # - MYSQL_DATABASE=${MYSQL_DATABASE}
-            # - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-            # - MYSQL_USER=${MYSQL_USER}
-            # - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-#        ports:
-#            - "8989:3306"
-#        volumes:
-#            - "./data/db/mysql:/var/lib/mysql"
+        ports:
+            - "81:80"
+            - "444:443"
+        depends_on:
+            - mysqldb
+    myadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: miradio-phpmyadmin
+        ports:
+            - "82:80"
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=${MYSQL_HOST}
+        restart: always
+        depends_on:
+            - mysqldb
+    mysqldb:
+        image: mysql
+        container_name: miradio-db
+        restart: always
+        env_file:
+            - ".env"
+        environment:
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+            - "8989:3306"
