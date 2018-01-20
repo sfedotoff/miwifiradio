@@ -1,19 +1,16 @@
 FROM richarvey/nginx-php-fpm
+ARG WWW_PATH
+ARG DOMAIN_NAME
+ENV WWW_PATH=$WWW_PATH
 RUN apk update
 RUN apk add ffmpeg
-RUN mkdir -p /zdata/www/
-WORKDIR /zdata/www/
-RUN git clone https://github.com/andr68rus/miwifiradio.git
-WORKDIR miwifiradio
+RUN mkdir -p $WWW_PATH
+WORKDIR $WWW_PATH
+ADD ./ ./
 RUN mkdir -p uploads/playing
 RUN chmod a+w uploads
 RUN chmod a+w uploads/playing
-
-#RUN ls /mnt/sda1/var/lib/docker/tmp/
-ADD ../../../../../../../d/work/miwifiradio/docker/options options
-RUN envsubst < options/options.php
-# replace env variables in options.php
-# make options writable
-# put nginx server config
-# replace env variables in nginx server config
-# change frn_aac to aac
+#RUN envsubst '$MYSQL_HOST$MYSQL_ROOT_USER$MYSQL_ROOT_PASSWORD$MYSQL_DATABASE$DOMAIN_NAME' < docker/config/config.php > config/config.php
+RUN chmod a+w config/config.php
+RUN envsubst '$DOMAIN_NAME$WWW_PATH' < docker/nginx.config > /etc/nginx/sites-enabled/default.conf
+RUN sed -i 's/libfdk_aac/aac/g' include/ffcontrol.php

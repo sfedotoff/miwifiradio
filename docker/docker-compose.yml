@@ -1,10 +1,18 @@
 version: '3'
 services:
     web:
-        build: .
+        build:
+            dockerfile: ./docker/Dockerfile
+            context: ./../
+            args:
+                - WWW_PATH=${WWW_PATH}
+                - DOMAIN_NAME=${DOMAIN_NAME}
+        image: miradio-web
         container_name: miradio-web
         env_file:
             - ".env"
+        volumes:
+            - .:/options
 #        ports:
 #            - "80:880"
 #            - "443:8443"
