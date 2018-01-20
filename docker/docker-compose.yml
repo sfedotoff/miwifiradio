@@ -2,7 +2,7 @@ version: '3'
 services:
     web:
         build:
-            dockerfile: ./docker/Dockerfile
+            dockerfile: ./docker/miradio-web.Dockerfile
             context: ./../
             args:
                 - MIR_WWW_PATH=${MIR_WWW_PATH}
@@ -28,7 +28,10 @@ services:
         depends_on:
             - mysqldb
     mysqldb:
-        image: mysql
+        build:
+            dockerfile: ./docker/miradio-db.Dockerfile
+            context: ./../
+        image: miradio-db
         container_name: miradio-db
         restart: always
         env_file:

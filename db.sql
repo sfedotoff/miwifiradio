@@ -67,5 +67,5 @@ CREATE TABLE IF NOT EXISTS `country` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-INSERT INTO genre VALUES (1, 1, "pop", "pop")
-INSERT INTO country VALUES (1, 1, "BY", "BY")
+INSERT INTO genre VALUES (1, 1, "pop", "pop");
+INSERT INTO country VALUES (1, 1, "BY", "BY");

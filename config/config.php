@@ -1,8 +1,8 @@
 <?php
 if (!defined("_KATE_MAIN")) die("You have no access to this file");
     $dbhost = getenv('MYSQL_HOST');
-    $dbuname = getenv('MYSQL_ROOT_USER');
-    $dbpass = getenv('MYSQL_ROOT_PASSWORD');
+    $dbuname = getenv('MYSQL_USER');
+    $dbpass = getenv('MYSQL_PASSWORD');
     $dbname = getenv('MYSQL_DATABASE');
     $global_path = getenv('MIR_WWW_PATH');
     $ffbin = "ffmpeg";
