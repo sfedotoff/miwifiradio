@@ -12,7 +12,7 @@ services:
         env_file:
             - ".env"
         ports:
-            - "81:80"
+            - "80:80"
             - "444:443"
         depends_on:
             - mysqldb
@@ -20,7 +20,7 @@ services:
         image: phpmyadmin/phpmyadmin
         container_name: miradio-phpmyadmin
         ports:
-            - "82:80"
+            - "81:80"
         environment:
             - PMA_ARBITRARY=1
             - PMA_HOST=${MYSQL_HOST}
@@ -42,4 +42,4 @@ services:
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         ports:
-            - "8989:3306"
+            - "3306:3306"
