@@ -29,6 +29,7 @@ All you are doing may or may not hurt your device and finally brick it :trollfac
 
 
 # How to configure
+There are two options of how to configure server: one option is described below and the second option is using Docker containers described [here](docker/README.md).
 
 1. Config your linux/bsd server to be up and running. Use nginx + PHP 5.4+ + MySQL for that
 2. Here is an example of my configuration for domain (using Vesta as my control panel). Pay attention to the lines rewriting m3u8 files and redirecting requests to nonexistant files to our main php-script. Don't forget to replace domainname.com with the one you like (and have access to). This config can be non-functional on your nginx installation, so just pay attention to what i mentioned above and modify it to fit your server.
