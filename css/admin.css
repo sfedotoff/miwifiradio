@@ -107,6 +107,10 @@ SUBNAVBAR ICONS
 .accept {background: url("../images/admin/template/accept.png") no-repeat center center;}
 .cancel {background: url("../images/admin/template/cancel.png") no-repeat center center;}
 .addnew{background: url("../images/admin/template/addnew.png") no-repeat center center;}
+.sync{background: url("../images/admin/template/sync.png") no-repeat center center;}
+.start{background: url("../images/admin/template/play.png") no-repeat center center;}
+.stop{background: url("../images/admin/template/stop.png") no-repeat center center;}
+.restart{background: url("../images/admin/template/restart.png") no-repeat center center;}
 .edit{background: url("../images/admin/template/edit.png") no-repeat center center;}
 .save{background: url("../images/admin/template/save.png") no-repeat center center;}
 .search {background: url("../images/admin/template/search.png") no-repeat center center;}

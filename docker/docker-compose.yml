@@ -1,0 +1,45 @@
+version: '3'
+services:
+    web:
+        build:
+            dockerfile: ./docker/web.Dockerfile
+            context: ./../
+            args:
+                - MIR_WWW_PATH=${MIR_WWW_PATH}
+                - MIR_DOMAIN_NAME=${MIR_DOMAIN_NAME}
+        image: miradio-web
+        container_name: miradio-web
+        env_file:
+            - ".env"
+        ports:
+            - "80:80"
+            - "444:443"
+        depends_on:
+            - mysqldb
+    myadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: miradio-phpmyadmin
+        ports:
+            - "81:80"
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=${MYSQL_HOST}
+        restart: always
+        depends_on:
+            - mysqldb
+    mysqldb:
+        build:
+            dockerfile: ./docker/db.Dockerfile
+            context: ./../
+        image: miradio-db
+        container_name: miradio-db
+        restart: always
+        env_file:
+            - ".env"
+        environment:
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+            - "3306:3306"

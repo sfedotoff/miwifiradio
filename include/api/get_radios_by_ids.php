@@ -36,7 +36,7 @@ $myRadios = [];
 foreach ($idArray as $id) {
     if(strpos($id, '527782') !== false) {
         $radioRow = $db->sql_fetchrow($db->sql_query("SELECT * FROM radios WHERE xid='$id' LIMIT 1"));
-        $myRadios[] = '{"id":'.$radioRow['xid'].',"kind":"radio","program_name":"","radio_name":"'.$radioRow['title'].'","radio_desc":"'.$radioRow['description'].'","schedule_id":0,"support_bitrates":[64],"rate24_aac_url":"","rate64_aac_url":"http://api.ximalaya.com/'.$radioRow['xid'].'.m3u8","rate24_ts_url":"","rate64_ts_url":"","radio_play_count":1,"cover_url_small":"http://api.ximalaya.com/images/radiologos/thumb/thumb_'.$radioRow['logo'].'","cover_url_large":"http://api.ximalaya.com/images/radiologos/'.$radioRow['logo'].'","updated_at":0,"created_at":0}';
+        $myRadios[] = '{"id":'.$radioRow['xid'].',"kind":"radio","program_name":"","radio_name":"'.addslashes($radioRow['title']).'","radio_desc":"'.addslashes($radioRow['description']).'","schedule_id":0,"support_bitrates":[64],"rate24_aac_url":"","rate64_aac_url":"http://'.$domain.'/'.$radioRow['xid'].'.m3u8","rate24_ts_url":"","rate64_ts_url":"","radio_play_count":1,"cover_url_small":"http://'.$domain.'/images/radiologos/thumb/thumb_'.$radioRow['logo'].'","cover_url_large":"http://'.$domain.'/images/radiologos/'.$radioRow['logo'].'","updated_at":0,"created_at":0}';
     } else {
         // Adding this id to list for parsing from real Ximalaya
         $realXimalayaIds[] = $id;
@@ -48,5 +48,7 @@ $requestParams['params']['ids'] = implode(',', $realXimalayaIds);
 
 
 // TODO: perform request to API if needed. Then override the response
-
-echo '{"radios":['.implode(',', $myRadios).']}';
+$response = '{"radios":['.implode(',', $myRadios).']}';
+$response = str_replace("\n", "", $response);
+$response = str_replace("\r", "", $response);
+echo $response;
